@@ -32,10 +32,11 @@ $conn = new mysqli($dbhost, $dbuser, $dbpass,$db) or die("Connect failed: %s\n".
         
         <?php
         $path= "./image/";
-        $sql = "SELECT multi_image from imagetest where id='1'";
+        $sql = "SELECT id, multi_image from imagetest where id='1'";
         $result = mysqli_query($conn, $sql);
         $row = mysqli_fetch_assoc($result);
         $listimage = unserialize($row['multi_image']);
+        $img_id = $row['id'];
         foreach($listimage as $value => $key){
             ?>
             <div class="image-container">
@@ -49,6 +50,9 @@ $conn = new mysqli($dbhost, $dbuser, $dbpass,$db) or die("Connect failed: %s\n".
             </div>
             <div class="center-container">
               <img src="<?php echo $path.$key; ?>">
+              <form>
+                <input type="hidden" name="img_index" class="array_index" value="<?php echo $value; ?>">
+              </form>
             </div>
           </div>
         </div>
@@ -136,11 +140,13 @@ $conn = new mysqli($dbhost, $dbuser, $dbpass,$db) or die("Connect failed: %s\n".
     var myDropzone = new Dropzone(".dropzone", { 
        autoProcessQueue: false,
        maxFilesize: 3,
+       parallelUploads: 10,
        acceptedFiles: ".jpeg,.jpg,.png,.gif",
        uploadMultiple:true,
     });
   
     $('#uploadFile').click(function(){
+      autoProcessQueue: true,
        myDropzone.processQueue();
     });
       

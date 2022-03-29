@@ -68,8 +68,13 @@ $('.on-image-controls > .fa-times').click(function() {
 });
 
 $('.on-image-controls > .delete-confirm').click(function() {
+//   $("input[name^='img_index']").each(function () {
+//     console.log($(this).val());
+//  });
+
+//  var re = $("input[name^='img_index']").val();
+//     console.log(re);
   $(this).parents('.image-container').remove();
-  
 });
 
 $('.product-image-manager > .image-container > .inner-image-container > .on-image-controls').mouseleave(function() {
