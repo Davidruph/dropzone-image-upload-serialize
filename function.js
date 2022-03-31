@@ -67,14 +67,30 @@ $('.on-image-controls > .fa-times').click(function() {
   $(this).parent().find('.delete-confirm').addClass('active');
 });
 
-$('.on-image-controls > .delete-confirm').click(function() {
-//   $("input[name^='img_index']").each(function () {
-//     console.log($(this).val());
-//  });
+$('.on-image-controls > .delete-confirm').each(function(index) {
+    $(this).on("click", function(){
+      $(this).parents('.image-container').remove();
+        var img_index = index;
+        var values = $('input[name="img_id"]').val();
 
-//  var re = $("input[name^='img_index']").val();
-//     console.log(re);
-  $(this).parents('.image-container').remove();
+        //console.log(values);
+
+       var request = $.ajax({
+          url: "findimage.php",
+          type: "POST",
+          data: {index : img_index, id : values},
+          dataType: "html"
+        });
+
+       request.done(function(msg) {
+          console.log(msg);
+          $('body').load(window.location.href,'body');
+        });
+
+        request.fail(function(jqXHR, textStatus) {
+          alert( "Request failed: " + textStatus );
+        });
+    });
 });
 
 $('.product-image-manager > .image-container > .inner-image-container > .on-image-controls').mouseleave(function() {

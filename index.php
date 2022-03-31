@@ -36,6 +36,7 @@ $conn = new mysqli($dbhost, $dbuser, $dbpass,$db) or die("Connect failed: %s\n".
         $result = mysqli_query($conn, $sql);
         $row = mysqli_fetch_assoc($result);
         $listimage = unserialize($row['multi_image']);
+        //var_dump($listimage);
         $img_id = $row['id'];
         foreach($listimage as $value => $key){
             ?>
@@ -50,9 +51,7 @@ $conn = new mysqli($dbhost, $dbuser, $dbpass,$db) or die("Connect failed: %s\n".
             </div>
             <div class="center-container">
               <img src="<?php echo $path.$key; ?>">
-              <form>
                 <input type="hidden" name="img_index" class="array_index" value="<?php echo $value; ?>">
-              </form>
             </div>
           </div>
         </div>
@@ -62,6 +61,7 @@ $conn = new mysqli($dbhost, $dbuser, $dbpass,$db) or die("Connect failed: %s\n".
         ?>
         
       </div>
+      <input type="hidden" name="img_id" class="array_id" value="<?php echo $img_id; ?>">
       <form action="upload.php" enctype="multipart/form-data" class="dropzone" id="image-upload">
       
       </form>
