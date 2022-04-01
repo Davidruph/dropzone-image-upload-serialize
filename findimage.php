@@ -15,10 +15,6 @@ if ($_POST['index']) {
 	 		//for example [1, 2, 3], if i unset [2], it will still retain the ordering so the code below makes sure it recounts (0, 1) else it will be (0, 2).
 	 		$val = array_values($image_list);
 	 		$new_array = serialize($val);
-	 		if (file_exists($path)) {
-	 			//if image was removed, no need keeping that file in the folder, to save space
-	 			unlink($path);
-	 		}
 	 		$sql = mysqli_query($conn, "UPDATE imagetest SET multi_image = '$new_array' WHERE id = $img_id");
 	 		if ($sql) {
 	 			echo "array has been changed";
