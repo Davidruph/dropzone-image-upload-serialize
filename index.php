@@ -32,7 +32,7 @@ $conn = new mysqli($dbhost, $dbuser, $dbpass,$db) or die("Connect failed: %s\n".
         
         <?php
         $path= "./image/";
-        $sql = "SELECT id, multi_image from imagetest where id='1'";
+        $sql = "SELECT id, multi_image from imagetest where id=1";
         $result = mysqli_query($conn, $sql);
         $row = mysqli_fetch_assoc($result);
         $listimage = unserialize($row['multi_image']);
@@ -66,7 +66,6 @@ $conn = new mysqli($dbhost, $dbuser, $dbpass,$db) or die("Connect failed: %s\n".
       
       </form>
       <button id="uploadFile">Upload Files</button>
-
     </div>
   </div>
 </div>
@@ -143,13 +142,19 @@ $conn = new mysqli($dbhost, $dbuser, $dbpass,$db) or die("Connect failed: %s\n".
        parallelUploads: 10,
        acceptedFiles: ".jpeg,.jpg,.png,.gif",
        uploadMultiple:true,
+       init: function () {
+        // Set up any event handlers
+        this.on('completemultiple', function () {
+            location.reload();
+        });
+    }
     });
   
     $('#uploadFile').click(function(){
       autoProcessQueue: true,
        myDropzone.processQueue();
     });
-      
+    
 </script>
 </body>
 </html>
